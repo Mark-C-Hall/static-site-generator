@@ -39,6 +39,20 @@ class TestHTMLNode(unittest.TestCase):
         node = HTMLNode("div", None, [child], None)
         self.assertEqual(node.children, [child])
 
+    def test_defaults_to_none(self):
+        node = HTMLNode()
+        self.assertIsNone(node.tag)
+        self.assertIsNone(node.value)
+        self.assertIsNone(node.children)
+        self.assertIsNone(node.props)
+
+    def test_partial_args(self):
+        node = HTMLNode("p", "Hello")
+        self.assertEqual(node.tag, "p")
+        self.assertEqual(node.value, "Hello")
+        self.assertIsNone(node.children)
+        self.assertIsNone(node.props)
+
     def test_to_html_not_implemented(self):
         node = HTMLNode("p", "Hello", None, None)
         with self.assertRaises(NotImplementedError):
