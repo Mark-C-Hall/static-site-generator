@@ -34,10 +34,16 @@ class TestLeafNode(unittest.TestCase):
         with self.assertRaises(ValueError):
             node.to_html()
 
-    def test_leaf_to_html_empty_value_raises(self):
+    def test_leaf_to_html_empty_value_renders(self):
         node = LeafNode("p", "")
-        with self.assertRaises(ValueError):
-            node.to_html()
+        self.assertEqual(node.to_html(), "<p></p>")
+
+    def test_leaf_to_html_img_void_tag(self):
+        node = LeafNode("img", "", {"src": "https://example.com", "alt": "a cat"})
+        self.assertEqual(
+            node.to_html(),
+            '<img src="https://example.com" alt="a cat">',
+        )
 
     def test_leaf_children_is_none(self):
         node = LeafNode("p", "Hello")
