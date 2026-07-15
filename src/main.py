@@ -1,4 +1,6 @@
 from textnode import *
+from parentnode import *
+from leafnode import *
 
 
 def main():
@@ -10,9 +12,25 @@ def main():
         "https://github.com/Mark-C-Hall/static-site-generator",
     )
 
+    parent = ParentNode(
+        "main",
+        [
+            LeafNode("b", "Bold text"),
+            ParentNode(
+                "p",
+                [
+                    LeafNode("i", "italic text"),
+                    LeafNode(None, "Normal text"),
+                    LeafNode(None, "Normal text"),
+                ],
+            ),
+        ],
+    )
+
     print(plain_text_node)
     print(bold_text_node)
     print(link_text_node)
+    print(parent.to_html())
 
 
 if __name__ == "__main__":
