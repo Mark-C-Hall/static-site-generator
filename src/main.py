@@ -1,6 +1,7 @@
 from textnode import *
 from parentnode import *
 from leafnode import *
+from delimeter import *
 
 
 def main():
@@ -32,16 +33,20 @@ def main():
         ],
     )
 
-    print(plain_text_node)
-    print(bold_text_node)
-    print(link_text_node)
+    node = TextNode("This is text with a `code block` word", TextType.PLAIN)
+    new_nodes = split_nodes_delimiter([node], "`", TextType.CODE)
 
-    print(plain_text_node.to_html_node().to_html())
-    print(bold_text_node.to_html_node().to_html())
-    print(link_text_node.to_html_node().to_html())
-    print(image_text_node.to_html_node().to_html())
+    print(new_nodes)
+    # print(plain_text_node)
+    # print(bold_text_node)
+    # print(link_text_node)
 
-    print(parent.to_html())
+    # print(plain_text_node.to_html_node().to_html())
+    # print(bold_text_node.to_html_node().to_html())
+    # print(link_text_node.to_html_node().to_html())
+    # print(image_text_node.to_html_node().to_html())
+
+    # print(parent.to_html())
 
 
 if __name__ == "__main__":
