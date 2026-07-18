@@ -1,7 +1,7 @@
 from textnode import TextNode, TextType
 from parentnode import ParentNode
 from leafnode import LeafNode
-from delimeter import split_nodes_delimiter
+from inline import split_nodes_delimiter
 
 
 def main():

@@ -1,5 +1,5 @@
 import unittest
-from delimeter import (
+from inline import (
     split_nodes_delimiter,
     extract_markdown_images,
     extract_markdown_links,
@@ -10,7 +10,7 @@ from delimeter import (
 from textnode import TextNode, TextType
 
 
-class TestDelimeter(unittest.TestCase):
+class TestInline(unittest.TestCase):
     def test_code_block(self):
         node = TextNode("This is text with a `code block` word", TextType.PLAIN)
         new_nodes = split_nodes_delimiter([node], "`", TextType.CODE)
