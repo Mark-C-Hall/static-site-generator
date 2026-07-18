@@ -74,26 +74,24 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(html_node.to_html(), "<code>code text</code>")
 
     def test_to_html_node_link(self):
-        node = TextNode(
-            "[Boot.dev](https://boot.dev)", TextType.LINK, "https://boot.dev"
-        )
+        node = TextNode("Boot.dev", TextType.LINK, "https://boot.dev")
         html_node = node.to_html_node()
         self.assertEqual(html_node.tag, "a")
-        self.assertEqual(html_node.value, "[Boot.dev](https://boot.dev)")
+        self.assertEqual(html_node.value, "Boot.dev")
         self.assertEqual(html_node.props, {"href": "https://boot.dev"})
         self.assertEqual(
             html_node.to_html(),
-            '<a href="https://boot.dev">[Boot.dev](https://boot.dev)</a>',
+            '<a href="https://boot.dev">Boot.dev</a>',
         )
 
     def test_to_html_node_link_no_url_raises(self):
-        node = TextNode("[Boot.dev](https://boot.dev)", TextType.LINK)
+        node = TextNode("Boot.dev", TextType.LINK)
         with self.assertRaises(AssertionError):
             node.to_html_node()
 
     def test_to_html_node_image(self):
         node = TextNode(
-            "![alt text](https://example.com/image.png)",
+            "alt text",
             TextType.IMAGE,
             "https://example.com/image.png",
         )
@@ -106,7 +104,7 @@ class TestTextNode(unittest.TestCase):
 
     def test_to_html_node_image_renders(self):
         node = TextNode(
-            "![alt text](https://example.com/image.png)",
+            "alt text",
             TextType.IMAGE,
             "https://example.com/image.png",
         )
@@ -117,7 +115,7 @@ class TestTextNode(unittest.TestCase):
         )
 
     def test_to_html_node_image_no_url_raises(self):
-        node = TextNode("![alt text](https://example.com/image.png)", TextType.IMAGE)
+        node = TextNode("alt text", TextType.IMAGE)
         with self.assertRaises(AssertionError):
             node.to_html_node()
 

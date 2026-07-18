@@ -1,5 +1,5 @@
 from enum import Enum
-from leafnode import *
+from leafnode import LeafNode
 
 
 class TextType(Enum):
@@ -44,8 +44,4 @@ class TextNode:
                 return LeafNode("a", self.text, {"href": self.url})
             case TextType.IMAGE:
                 assert self.url is not None
-                start = self.text.find("[") + 1
-                end = self.text.find("]")
-                return LeafNode(
-                    "img", "", {"src": self.url, "alt": self.text[start:end]}
-                )
+                return LeafNode("img", "", {"src": self.url, "alt": self.text})

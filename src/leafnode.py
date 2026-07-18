@@ -1,4 +1,3 @@
-from htmlnode import *
 from htmlnode import HTMLNode
 
 

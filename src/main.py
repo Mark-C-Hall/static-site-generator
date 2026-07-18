@@ -1,19 +1,19 @@
-from textnode import *
-from parentnode import *
-from leafnode import *
-from delimeter import *
+from textnode import TextNode, TextType
+from parentnode import ParentNode
+from leafnode import LeafNode
+from delimeter import split_nodes_delimiter
 
 
 def main():
     plain_text_node = TextNode("Hello!", TextType.PLAIN)
-    bold_text_node = TextNode("**HEY!!!**", TextType.BOLD)
+    bold_text_node = TextNode("HEY!!!", TextType.BOLD)
     link_text_node = TextNode(
-        "[Repo](https://github.com/Mark-C-Hall/static-site-generator)",
+        "Repo",
         TextType.LINK,
         "https://github.com/Mark-C-Hall/static-site-generator",
     )
     image_text_node = TextNode(
-        "![A black kitten sleeping on a white blanket](https://example.com)",
+        "A black kitten sleeping on a white blanket",
         TextType.IMAGE,
         "https://example.com",
     )

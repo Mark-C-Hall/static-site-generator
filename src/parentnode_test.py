@@ -1,5 +1,5 @@
 import unittest
-from parentnode import *
+from parentnode import ParentNode
 from leafnode import LeafNode
 
 
