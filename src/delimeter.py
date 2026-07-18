@@ -24,6 +24,53 @@ def split_nodes_delimiter(
     return result
 
 
+def split_nodes_image(old_nodes: list[TextNode]) -> list[TextNode]:
+    result: list[TextNode] = []
+
+    for node in old_nodes:
+        if node.text_type != TextType.PLAIN:
+            result.append(node)
+            continue
+        images = extract_markdown_images(node.text)
+        if len(images) == 0:
+            result.append(node)
+            continue
+        for alt, url in images:
+            before, node.text = node.text.split(f"![{alt}]({url})", 1)
+            if before:
+                result.append(TextNode(before, TextType.PLAIN))
+            result.append(TextNode(alt, TextType.IMAGE, url))
+        if node.text:
+            result.append(TextNode(node.text, TextType.PLAIN))
+
+    return result
+
+
+def split_nodes_link(old_nodes: list[TextNode]) -> list[TextNode]:
+    # Assumes split_nodes_image has already run on old_nodes. Image markdown
+    # like ![alt](url) contains [alt](url) as a literal substring, so if raw
+    # image syntax is still present here it can be mistaken for a link.
+    result: list[TextNode] = []
+
+    for node in old_nodes:
+        if node.text_type != TextType.PLAIN:
+            result.append(node)
+            continue
+        links = extract_markdown_links(node.text)
+        if len(links) == 0:
+            result.append(node)
+            continue
+        for alt, url in links:
+            before, node.text = node.text.split(f"[{alt}]({url})", 1)
+            if before:
+                result.append(TextNode(before, TextType.PLAIN))
+            result.append(TextNode(alt, TextType.LINK, url))
+        if node.text:
+            result.append(TextNode(node.text, TextType.PLAIN))
+
+    return result
+
+
 def extract_markdown_images(text: str) -> list[tuple[str, str]]:
     return re.findall(r"\!\[(.*?)\]\((.*?)\)", text)
 
