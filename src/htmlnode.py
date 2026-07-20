@@ -14,7 +14,7 @@ class HTMLNode:
     def __repr__(self) -> str:
         return f"HTMLNode({self.tag}, {self.value}, {self.children}, {self.props})"
 
-    def to_html(self):
+    def to_html(self) -> str:
         raise NotImplementedError
 
     def props_to_html(self) -> str:
