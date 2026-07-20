@@ -1,52 +1,27 @@
-from textnode import TextNode, TextType
-from parentnode import ParentNode
-from leafnode import LeafNode
-from inline import split_nodes_delimiter
+import os
+import shutil
+
+
+def copy_files(src: str, dest: str):
+    if not os.path.exists(dest):
+        os.mkdir(dest)
+    for entry in os.listdir(src):
+        src_path = os.path.join(src, entry)
+        dest_path = os.path.join(dest, entry)
+        if os.path.isfile(src_path):
+            shutil.copy(src_path, dest_path)
+        else:
+            copy_files(src_path, dest_path)
 
 
 def main():
-    plain_text_node = TextNode("Hello!", TextType.PLAIN)
-    bold_text_node = TextNode("HEY!!!", TextType.BOLD)
-    link_text_node = TextNode(
-        "Repo",
-        TextType.LINK,
-        "https://github.com/Mark-C-Hall/static-site-generator",
-    )
-    image_text_node = TextNode(
-        "A black kitten sleeping on a white blanket",
-        TextType.IMAGE,
-        "https://example.com",
-    )
-
-    parent = ParentNode(
-        "main",
-        [
-            LeafNode("b", "Bold text"),
-            ParentNode(
-                "p",
-                [
-                    LeafNode("i", "italic text"),
-                    LeafNode(None, "Normal text"),
-                    LeafNode(None, "Normal text"),
-                ],
-            ),
-        ],
-    )
-
-    node = TextNode("This is text with a `code block` word", TextType.PLAIN)
-    new_nodes = split_nodes_delimiter([node], "`", TextType.CODE)
-
-    print(new_nodes)
-    # print(plain_text_node)
-    # print(bold_text_node)
-    # print(link_text_node)
-
-    # print(plain_text_node.to_html_node().to_html())
-    # print(bold_text_node.to_html_node().to_html())
-    # print(link_text_node.to_html_node().to_html())
-    # print(image_text_node.to_html_node().to_html())
-
-    # print(parent.to_html())
+    # Copy files from static to public
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(script_dir)
+    static_dir = os.path.join(project_root, "static")
+    public_dir = os.path.join(project_root, "public")
+    shutil.rmtree(public_dir)
+    copy_files(static_dir, public_dir)
 
 
 if __name__ == "__main__":
